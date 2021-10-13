@@ -6,6 +6,7 @@ import { Button } from "react-native-elements";
 import Toast from "react-native-easy-toast";
 import Loading from "../../components/Loading";
 import InfoUser from "../../components/Account/InfoUser";
+import AccountOptions from "../../components/Account/AccountOptions";
 
 const UserLogged = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -21,14 +22,21 @@ const UserLogged = () => {
     return (
         <View style={styles.viewUserInfo}>
             {userInfo && (
-                <InfoUser
-                    userInfo={userInfo}
-                    toastRef={toastRef}
-                    setLoading={setLoading}
-                    setLoadingText={setLoadingText}
-                />
+                <>
+                    <InfoUser
+                        userInfo={userInfo}
+                        toastRef={toastRef}
+                        setLoading={setLoading}
+                        setLoadingText={setLoadingText}
+                    />
+                    <AccountOptions
+                        userInfo={userInfo}
+                        toastRef={toastRef}
+                        setLoading={setLoading}
+                        setLoadingText={setLoadingText}
+                    />
+                </>
             )}
-            <Text>Account Options...</Text>
             <Button
                 title="Cerrar sesion"
                 buttonStyle={styles.btnLogout}
