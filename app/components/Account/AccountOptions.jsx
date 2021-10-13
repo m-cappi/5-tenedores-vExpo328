@@ -11,10 +11,30 @@ const AccountOptions = ({
     setLoadingText,
 }) => {
     const [showModal, setShowModal] = useState(false);
+    const [renderComponent, setRenderComponent] = useState(null);
+
     const selectedComponent = (key) => {
-        console.log("Click!");
-        console.log(key);
-        setShowModal(true);
+        switch (key) {
+            case "displayName":
+                setRenderComponent(<Text>Cambiando Nombre y Apellidos</Text>);
+                setShowModal(true);
+                break;
+
+            case "email":
+                setRenderComponent(<Text>Cambiando Email</Text>);
+                setShowModal(true);
+                break;
+
+            case "password":
+                setRenderComponent(<Text>Cambiando Contraseña</Text>);
+                setShowModal(true);
+                break;
+
+            default:
+                setRenderComponent(null);
+                setShowModal(false);
+                break;
+        }
     };
     const menuOptions = generateOptions(selectedComponent);
 
@@ -43,9 +63,11 @@ const AccountOptions = ({
                     /> */}
                 </ListItem>
             ))}
-            <Modal isVisible={showModal} setIsVisible={setShowModal}>
-                <Text>Hola mundo!2.0</Text>
-            </Modal>
+            {renderComponent && (
+                <Modal isVisible={showModal} setIsVisible={setShowModal}>
+                    {renderComponent}
+                </Modal>
+            )}
         </View>
     );
 };
