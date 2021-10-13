@@ -1,7 +1,8 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
+import Modal from "../Modal";
 
 const AccountOptions = ({
     userInfo: { uid, photoURL, displayName, email },
@@ -9,9 +10,11 @@ const AccountOptions = ({
     setLoading,
     setLoadingText,
 }) => {
+    const [showModal, setShowModal] = useState(false);
     const selectedComponent = (key) => {
         console.log("Click!");
         console.log(key);
+        setShowModal(true);
     };
     const menuOptions = generateOptions(selectedComponent);
 
@@ -40,6 +43,9 @@ const AccountOptions = ({
                     /> */}
                 </ListItem>
             ))}
+            <Modal isVisible={showModal} setIsVisible={setShowModal}>
+                <Text>Hola mundo!2.0</Text>
+            </Modal>
         </View>
     );
 };
