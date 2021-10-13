@@ -13,7 +13,7 @@ const RegisterForm = ({ toastRef }) => {
     const [formData, setFormData] = useState(defaultFormValue());
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
-    console.log(firebase);
+    //console.log(firebase);
     const handleSubmit = () => {
         if (
             isEmpty(formData.email) ||
