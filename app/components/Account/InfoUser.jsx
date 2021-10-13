@@ -9,7 +9,7 @@ const InfoUser = ({
     userInfo: { uid, photoURL, displayName, email },
     toastRef,
     setLoading,
-    setLoadingText,
+    setLoadingText, setReloadUser
 }) => {
     
     const changeAvatar = async () => {
@@ -69,6 +69,7 @@ const InfoUser = ({
                 };
                 //console.log(update);
                 await firebase.auth().currentUser.updateProfile(update);
+                setReloadUser(true)
             })
             .catch(() => {
                 toastRef.current.show("Error al actualizar el avatar");
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         marginRight: 20,
-        backgroundColor: "#f00",
+        backgroundColor: "#f2f2f2",
     },
     userName: {
         fontWeight: "bold",

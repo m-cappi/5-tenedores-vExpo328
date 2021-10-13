@@ -12,13 +12,15 @@ const UserLogged = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loadingText, setLoadingText] = useState("");
+    const [reloadUser, setReloadUser] = useState(false)
     const toastRef = useRef();
     useEffect(() => {
         (async () => {
             const user = await firebase.auth().currentUser;
             setUserInfo(user);
         })(); //funcion autoejecutable
-    }, []);
+        setReloadUser(false)
+    }, [reloadUser]);
     return (
         <View style={styles.viewUserInfo}>
             {userInfo && (
@@ -28,12 +30,14 @@ const UserLogged = () => {
                         toastRef={toastRef}
                         setLoading={setLoading}
                         setLoadingText={setLoadingText}
+                        setReloadUser={setReloadUser}
                     />
                     <AccountOptions
                         userInfo={userInfo}
                         toastRef={toastRef}
                         setLoading={setLoading}
                         setLoadingText={setLoadingText}
+                        setReloadUser={setReloadUser}
                     />
                 </>
             )}

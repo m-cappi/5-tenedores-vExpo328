@@ -3,12 +3,14 @@ import { StyleSheet, View, Text } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
 import Modal from "../Modal";
+import NameChangeForm from "./NameChangeForm";
 
 const AccountOptions = ({
     userInfo: { uid, photoURL, displayName, email },
     toastRef,
     setLoading,
     setLoadingText,
+    setReloadUser,
 }) => {
     const [showModal, setShowModal] = useState(false);
     const [renderComponent, setRenderComponent] = useState(null);
@@ -16,7 +18,14 @@ const AccountOptions = ({
     const selectedComponent = (key) => {
         switch (key) {
             case "displayName":
-                setRenderComponent(<Text>Cambiando Nombre y Apellidos</Text>);
+                setRenderComponent(
+                    <NameChangeForm
+                        displayName={displayName}
+                        setShowModal={setShowModal}
+                        toastRef={toastRef}
+                        setReloadUser={setReloadUser}
+                    />
+                );
                 setShowModal(true);
                 break;
 
