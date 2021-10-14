@@ -4,7 +4,7 @@ import { firebaseApp } from "./app/utils/firebase";
 import Navigation from "./app/navigations/Navigation";
 // import firebase from "firebase";
 
-LogBox.ignoreLogs(["Setting a timer", "It appears that"]);
+LogBox.ignoreLogs(["Setting a timer", "It appears that", "Animated: `useNativeDriver`"]);
 
 export default function App() {
     // useEffect(() => {

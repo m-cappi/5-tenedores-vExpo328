@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
 import Modal from "../Modal";
 import NameChangeForm from "./NameChangeForm";
 import EmailChangeForm from "./EmailChangeForm";
+import PasswordChangeForm from "./PasswordChangeForm";
 
 const AccountOptions = ({
     userInfo: { uid, photoURL, displayName, email },
@@ -42,7 +43,13 @@ const AccountOptions = ({
                 break;
 
             case "password":
-                setRenderComponent(<Text>Cambiando Contraseña</Text>);
+                setRenderComponent(
+                    <PasswordChangeForm
+                        setShowModal={setShowModal}
+                        toastRef={toastRef}
+                    />
+                );
+
                 setShowModal(true);
                 break;
 
