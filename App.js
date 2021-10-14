@@ -4,7 +4,12 @@ import { firebaseApp } from "./app/utils/firebase";
 import Navigation from "./app/navigations/Navigation";
 // import firebase from "firebase";
 
-LogBox.ignoreLogs(["Setting a timer", "It appears that", "Animated: `useNativeDriver`"]);
+LogBox.ignoreLogs([
+    "Setting a timer",
+    "It appears that",
+    "Animated: `useNativeDriver`",
+    "expo-permissions is now deprecated",
+]);
 
 export default function App() {
     // useEffect(() => {
