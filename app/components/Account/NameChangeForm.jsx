@@ -1,10 +1,10 @@
 import { isEmpty } from "lodash";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import firebase from "firebase";
 
-const NameChangeForm = ({ displayName, setShowModal, toastRef, setReloadUser }) => {
+const NameChangeForm = ({ displayName, setShowModal, setReloadUser }) => {
     const [newName, setNewName] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const NameChangeForm = ({ displayName, setShowModal, toastRef, setReloadUser }) 
                 .auth()
                 .currentUser.updateProfile(update)
                 .then(() => {
-                    setReloadUser(true)
+                    setReloadUser(true);
                     setLoading(false);
                     setShowModal(false);
                 })
@@ -32,7 +32,6 @@ const NameChangeForm = ({ displayName, setShowModal, toastRef, setReloadUser }) 
     };
     return (
         <View style={styles.view}>
-            <Text>NameChangeForm... {displayName}</Text>
             <Input
                 placeholder="Nombre y Apellido"
                 style={styles.input}

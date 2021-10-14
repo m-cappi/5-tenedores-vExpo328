@@ -4,6 +4,7 @@ import { ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
 import Modal from "../Modal";
 import NameChangeForm from "./NameChangeForm";
+import EmailChangeForm from "./EmailChangeForm";
 
 const AccountOptions = ({
     userInfo: { uid, photoURL, displayName, email },
@@ -22,7 +23,6 @@ const AccountOptions = ({
                     <NameChangeForm
                         displayName={displayName}
                         setShowModal={setShowModal}
-                        toastRef={toastRef}
                         setReloadUser={setReloadUser}
                     />
                 );
@@ -30,7 +30,14 @@ const AccountOptions = ({
                 break;
 
             case "email":
-                setRenderComponent(<Text>Cambiando Email</Text>);
+                setRenderComponent(
+                    <EmailChangeForm
+                        email={email}
+                        setShowModal={setShowModal}
+                        setReloadUser={setReloadUser}
+                        toastRef={toastRef}
+                    />
+                );
                 setShowModal(true);
                 break;
 
