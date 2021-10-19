@@ -11,6 +11,9 @@ import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
 import firebase from "firebase";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
+import { map, size, filter } from "lodash";
+
+const screenWidth = Dimensions.get("window").width;
 
 const AddRestaurantForm = ({ toastRef, setIsLoading, navigation }) => {
     const [restaurant, setRestaurant] = useState(restaurantDefaultForm());
@@ -21,6 +24,7 @@ const AddRestaurantForm = ({ toastRef, setIsLoading, navigation }) => {
     };
     return (
         <ScrollView style={styles.scrollView}>
+            <RestaurantBannerImg bannerImg={restaurantGallery[0]} />
             <FormAdd setRestaurant={setRestaurant} />
             <ImageAdd
                 toastRef={toastRef}
@@ -36,7 +40,26 @@ const AddRestaurantForm = ({ toastRef, setIsLoading, navigation }) => {
     );
 };
 
+const restaurantDefaultForm = () => {
+    return { name: "", address: "", description: "" };
+};
+
 export default AddRestaurantForm;
+
+const RestaurantBannerImg = ({ bannerImg }) => {
+    return (
+        <View style={styles.viewBannerImg}>
+            <Image
+                source={
+                    bannerImg
+                        ? { uri: bannerImg }
+                        : require("../../../assets/img/no-image.png")
+                }
+                style={{ width: screenWidth, height: 200 }}
+            />
+        </View>
+    );
+};
 
 const FormAdd = ({ setRestaurant }) => {
     const handleChange = (e, type) => {
@@ -96,21 +119,50 @@ const ImageAdd = ({ toastRef, setRestaurantGallery, restaurantGallery }) => {
             }
         }
     };
+
+    const removeImg = async (imgToRemove) => {
+        Alert.alert(
+            "Eliminar Imagen",
+            "Estas seguro de querer eliminar la imagen?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Eliminar",
+                    onPress: () => {
+                        setRestaurantGallery((currentGallery) =>
+                            filter(
+                                currentGallery,
+                                (imgUrl) => imgUrl !== imgToRemove
+                            )
+                        );
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    };
+
     return (
         <View style={styles.imagesView}>
-            <Icon
-                type="material-community"
-                name="camera"
-                color="#7a7a7a"
-                containerStyle={styles.iconContainer}
-                onPress={imgSelect}
-            />
+            {size(restaurantGallery) < 4 && (
+                <Icon
+                    type="material-community"
+                    name="camera"
+                    color="#7a7a7a"
+                    containerStyle={styles.iconContainer}
+                    onPress={imgSelect}
+                />
+            )}
+            {map(restaurantGallery, (img, index) => (
+                <Avatar
+                    key={index}
+                    style={styles.miniatureStyle}
+                    source={{ uri: img }}
+                    onPress={() => removeImg(img)}
+                />
+            ))}
         </View>
     );
-};
-
-const restaurantDefaultForm = () => {
-    return { name: "", address: "", description: "" };
 };
 
 const styles = StyleSheet.create({
@@ -133,5 +185,11 @@ const styles = StyleSheet.create({
         width: 70,
         marginRight: 10,
         backgroundColor: "#e3e3e3",
+    },
+    miniatureStyle: { width: 70, height: 70, marginRight: 10 },
+    viewBannerImg: {
+        alignItems: "center",
+        height: 200,
+        marginBottom: 20,
     },
 });
