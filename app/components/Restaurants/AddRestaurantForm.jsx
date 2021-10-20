@@ -155,6 +155,7 @@ const RestaurantBannerImg = ({ bannerImg }) => {
 
 const FormAdd = ({ setRestaurant, setIsVisibleMap, locationRestaurant }) => {
     const handleChange = (e, type) => {
+        e.persist();
         setRestaurant((actual) => {
             return { ...actual, [type]: e.nativeEvent.text };
         });
