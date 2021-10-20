@@ -16,6 +16,9 @@ import MapView from "react-native-maps";
 import { map, size, filter, stubArray } from "lodash";
 import uuid from "random-uuid-v4";
 import Modal from "../Modal";
+import { firebaseApp } from "../../utils/firebase";
+
+const db = firebase.firestore(firebaseApp);
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -43,17 +46,44 @@ const AddRestaurantForm = ({ toastRef, setIsLoading, navigation }) => {
             );
         else {
             setIsLoading(true);
-            console.log("Ok!");
-            uploadImgStorage().then((res) => {
-                console.log(res);
-                setIsLoading(false);
+            uploadImgStorage().then((response) => {
+                db.collection("restaurants")
+                    .add({
+                        name: restaurant.name,
+                        address: restaurant.address,
+                        description: restaurant.description,
+                        location: locationRestaurant,
+                        images: response,
+                        rating: 0,
+                        ratingTotal: 0,
+                        quantityVoting: 0,
+                        createdAt: new Date(),
+                        createdBy: firebase.auth().currentUser.uid,
+                    })
+                    .then(() => {
+                        toastRef.current.show(
+                            "Restaurante agregado con exito!"
+                        );
+                        navigation.navigate("restaurants");
+                    })
+                    .catch((err) => {
+                        console.log("@AddRestaurantForm~handleSubmit: ");
+                        console.log(err);
+                        toastRef.current.show(
+                            "Error al subir el restaurante. Intentelo mas tarde!",
+                            4000
+                        );
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
             });
         }
     };
 
     const uploadImgStorage = async () => {
         const imgBlob = [];
-        
+
         await Promise.all(
             map(restaurantGallery, async (img) => {
                 const res = await fetch(img);
@@ -231,7 +261,6 @@ const Map = ({
                     />
                 </View>
             </View>
-            <Text>Mapa2.0</Text>
         </Modal>
     );
 };
@@ -341,7 +370,7 @@ const styles = StyleSheet.create({
     },
     mapStyle: {
         width: "100%",
-        height: 550,
+        height: "85%",
     },
     viewMapBtn: {
         flexDirection: "row",
