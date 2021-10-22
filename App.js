@@ -9,6 +9,7 @@ LogBox.ignoreLogs([
     "It appears that",
     "Animated: `useNativeDriver`",
     "expo-permissions is now deprecated",
+    " Cannot update a component",
 ]);
 
 // import {decode, encode} from "base-64"

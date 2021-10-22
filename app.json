@@ -18,7 +18,12 @@
             "supportsTablet": false
         },
         "android": {
-            "package":"com.martincappi.cincotenedores",
+            "package": "com.martincappi.cincotenedores",
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyCwOqm8Rgw-FFNBPx8zVPZtlVE2yHX9_yM"
+                }
+            },
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
