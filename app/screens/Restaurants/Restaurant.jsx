@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import CarouselImg from "../../components/CarouselImg";
 import RestaurantBanner from "../../components/Restaurants/RestaurantBanner";
 import RestaurantInfo from "../../components/Restaurants/RestaurantInfo";
+import ListReviews from "../../components/Restaurants/ListReviews";
 
 const db = firebase.firestore(firebaseApp);
 const screenWidth = Dimensions.get("window").width;
@@ -26,7 +27,6 @@ const Restaurant = ({ navigation, route }) => {
                 const data = res.data();
                 data.id = res.id;
                 setRestaurant(data);
-                console.log(restaurant);
                 setRating(data.rating);
             });
     }, []);
@@ -46,10 +46,15 @@ const Restaurant = ({ navigation, route }) => {
                         description={restaurant.description}
                         rating={rating}
                     />
-                    <RestaurantInfo 
-                    location={restaurant.location}
-                    name={restaurant.name}
-                    address={restaurant.address}
+                    <RestaurantInfo
+                        location={restaurant.location}
+                        name={restaurant.name}
+                        address={restaurant.address}
+                    />
+                    <ListReviews 
+                    navigation={navigation}
+                    idRestaurant={restaurant.id}
+                    setRating={setRating}
                     />
                 </>
             )}
