@@ -6,6 +6,7 @@ import { firebaseApp } from "../../utils/firebase";
 import Loading from "../../components/Loading";
 import CarouselImg from "../../components/CarouselImg";
 import RestaurantBanner from "../../components/Restaurants/RestaurantBanner";
+import RestaurantInfo from "../../components/Restaurants/RestaurantInfo";
 
 const db = firebase.firestore(firebaseApp);
 const screenWidth = Dimensions.get("window").width;
@@ -35,7 +36,6 @@ const Restaurant = ({ navigation, route }) => {
             <Loading isVisible={!restaurant ? true : false} text="Cargando" />
             {restaurant && (
                 <>
-                    <Text>Restaurante Info...</Text>
                     <CarouselImg
                         arrayImg={restaurant.images}
                         width={screenWidth}
@@ -45,6 +45,11 @@ const Restaurant = ({ navigation, route }) => {
                         name={restaurant.name}
                         description={restaurant.description}
                         rating={rating}
+                    />
+                    <RestaurantInfo 
+                    location={restaurant.location}
+                    name={restaurant.name}
+                    address={restaurant.address}
                     />
                 </>
             )}
