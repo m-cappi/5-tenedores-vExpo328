@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, ScrollView, Dimensions } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { firebaseApp } from "../../utils/firebase";
+
 import Loading from "../../components/Loading";
 import CarouselImg from "../../components/CarouselImg";
 import RestaurantBanner from "../../components/Restaurants/RestaurantBanner";
@@ -19,17 +22,20 @@ const Restaurant = ({ navigation, route }) => {
 
     navigation.setOptions({ title: name });
 
-    useEffect(() => {
-        db.collection("restaurants")
-            .doc(id)
-            .get()
-            .then((res) => {
-                const data = res.data();
-                data.id = res.id;
-                setRestaurant(data);
-                setRating(data.rating);
-            });
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            db.collection("restaurants")
+                .doc(id)
+                .get()
+                .then((res) => {
+                    const data = res.data();
+                    console.log(data);
+                    data.id = res.id;
+                    setRestaurant(data);
+                    setRating(data.rating);
+                });
+        }, [])
+    );
 
     return (
         <ScrollView vertical style={styles.viewBody}>
@@ -51,10 +57,10 @@ const Restaurant = ({ navigation, route }) => {
                         name={restaurant.name}
                         address={restaurant.address}
                     />
-                    <ListReviews 
-                    navigation={navigation}
-                    idRestaurant={restaurant.id}
-                    setRating={setRating}
+                    <ListReviews
+                        navigation={navigation}
+                        idRestaurant={restaurant.id}
+                        setRating={setRating}
                     />
                 </>
             )}

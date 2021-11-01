@@ -1,13 +1,82 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AirbnbRating, Button, Input } from "react-native-elements";
+import Toast from "react-native-easy-toast";
+import firebase from "firebase/app";
+import { firebaseApp } from "../../utils/firebase";
+import "firebase/firestore";
+import Loading from "../../components/Loading";
+
+const db = firebase.firestore(firebaseApp);
 
 const AddRestaurantReview = ({ navigation, route }) => {
     const { idRestaurant } = route.params;
+    const [rating, setRating] = useState(null);
+    const [title, setTitle] = useState("");
+    const [review, setReview] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const toastRef = useRef();
 
+    const handleSubmit = () => {
+        if (!rating) toastRef.current.show("No has dado ninguna puntuacion");
+        else if (!title) toastRef.current.show("El titulo es obligatorio");
+        else if (!review) toastRef.current.show("El comentario es obligatorio");
+        else {
+            setIsLoading(true);
+            const user = firebase.auth().currentUser;
+            const payload = {
+                idUser: user.uid,
+                avatarUser: user.photoURL,
+                idRestaurant: idRestaurant,
+                title: title,
+                review: review,
+                rating: rating,
+                createdAt: new Date(),
+            };
+            db.collection("reviews")
+                .add(payload)
+                .then(() => {
+                    updateRestaurant();
+                })
+                .catch(() => {
+                    toastRef.current.show("Error al enviar la review", 3000);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        }
+    };
+
+    const updateRestaurant = () => {
+        const restaurantRef = db.collection("restaurants").doc(idRestaurant);
+
+        restaurantRef.get().then(async (res) => {
+            console.log("Estoy en restaurantRef")
+            //console.log(res)
+            const restaurantData = await res.data();
+            
+            console.log("Restaurant Data:::::")
+            console.log(restaurantData)
+            const ratingTotal = restaurantData.ratingTotal + rating;//ratingTotal
+            console.log("ratingTotal: ", ratingTotal)
+            const quantityVoting = restaurantData.quantityVoting + 1;//quantityVoting
+            console.log("quantityVoting: ", quantityVoting)
+            const newRating = ratingTotal / quantityVoting;
+            console.log("newRating: ", newRating)
+
+            restaurantRef.update({
+                rating: newRating,
+                ratingTotal:ratingTotal,
+                quantityVoting:quantityVoting,
+            }).then(()=>{
+                navigation.goBack()
+            })
+        });
+    };
     return (
         <View style={styles.viewBody}>
             <Text>AddRestaurantReview...</Text>
+
             <View style={styles.viewRating}>
                 <AirbnbRating
                     count={5}
@@ -20,22 +89,30 @@ const AddRestaurantReview = ({ navigation, route }) => {
                     ]}
                     defaultRating={0}
                     size={35}
+                    onFinishRating={(value) => setRating(value)}
                 />
             </View>
             <View style={styles.formReview}>
-                <Input placeholder="Titulo" style={styles.input} />
                 <Input
-                    placeholder="Describe tu experiencia"
+                    placeholder="Titulo"
+                    onChange={(e) => setTitle(e.nativeEvent.text)}
+                    style={styles.input}
+                />
+                <Input
+                    placeholder="Describe tu experiencia..."
                     multiline={true}
                     inputContainerStyle={styles.textArea}
-                    //style={styles.input}
+                    onChange={(e) => setReview(e.nativeEvent.text)}
                 />
                 <Button
                     title="Envia tu comentario"
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.btn}
+                    onPress={handleSubmit}
                 />
             </View>
+            <Toast ref={toastRef} position="center" opacity={0.9} />
+            <Loading isVisible={isLoading} text="Enviando comentario" />
         </View>
     );
 };
