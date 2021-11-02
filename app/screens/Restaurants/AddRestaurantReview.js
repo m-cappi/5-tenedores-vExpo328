@@ -11,10 +11,12 @@ const db = firebase.firestore(firebaseApp);
 
 const AddRestaurantReview = ({ navigation, route }) => {
     const { idRestaurant } = route.params;
+
     const [rating, setRating] = useState(null);
     const [title, setTitle] = useState("");
     const [review, setReview] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    
     const toastRef = useRef();
 
     const handleSubmit = () => {
@@ -50,29 +52,25 @@ const AddRestaurantReview = ({ navigation, route }) => {
     const updateRestaurant = () => {
         const restaurantRef = db.collection("restaurants").doc(idRestaurant);
 
-        restaurantRef.get().then(async (res) => {
-            console.log("Estoy en restaurantRef")
-            //console.log(res)
-            const restaurantData = await res.data();
-            
-            console.log("Restaurant Data:::::")
-            console.log(restaurantData)
-            const ratingTotal = restaurantData.ratingTotal + rating;//ratingTotal
-            console.log("ratingTotal: ", ratingTotal)
-            const quantityVoting = restaurantData.quantityVoting + 1;//quantityVoting
-            console.log("quantityVoting: ", quantityVoting)
-            const newRating = ratingTotal / quantityVoting;
-            console.log("newRating: ", newRating)
+        restaurantRef.get().then((res) => {
+            const restaurantData = res.data();
 
-            restaurantRef.update({
-                rating: newRating,
-                ratingTotal:ratingTotal,
-                quantityVoting:quantityVoting,
-            }).then(()=>{
-                navigation.goBack()
-            })
+            const ratingTotal = restaurantData.ratingTotal + rating;
+            const quantityVoting = restaurantData.quantityVoting + 1;
+            const newRating = ratingTotal / quantityVoting;
+
+            restaurantRef
+                .update({
+                    rating: newRating,
+                    ratingTotal: ratingTotal,
+                    quantityVoting: quantityVoting,
+                })
+                .then(() => {
+                    navigation.goBack();
+                });
         });
     };
+
     return (
         <View style={styles.viewBody}>
             <Text>AddRestaurantReview...</Text>

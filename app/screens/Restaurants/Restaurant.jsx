@@ -29,7 +29,6 @@ const Restaurant = ({ navigation, route }) => {
                 .get()
                 .then((res) => {
                     const data = res.data();
-                    console.log(data);
                     data.id = res.id;
                     setRestaurant(data);
                     setRating(data.rating);
@@ -60,7 +59,6 @@ const Restaurant = ({ navigation, route }) => {
                     <ListReviews
                         navigation={navigation}
                         idRestaurant={restaurant.id}
-                        setRating={setRating}
                     />
                 </>
             )}
