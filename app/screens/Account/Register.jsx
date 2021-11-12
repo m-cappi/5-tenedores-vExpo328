@@ -15,7 +15,6 @@ const Register = () => {
                     style={styles.logo}
                 />
                 <View>
-                    {/* <Text style={styles.viewForm}>Register FORM</Text> */}
                     <RegisterForm toastRef={toastRef} />
                 </View>
             </>

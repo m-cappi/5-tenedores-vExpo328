@@ -57,7 +57,6 @@ const RegisterForm = ({ toastRef }) => {
 
     return (
         <View style={styles.formContainer}>
-            {/* <Text>Register Form...</Text> */}
             <Input
                 placeholder="Correo electronico"
                 containerStyle={styles.inputForm}
