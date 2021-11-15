@@ -13,14 +13,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import { size } from "lodash";
 import Toast from "react-native-easy-toast";
 
-import { firabaseApp, firebaseApp } from "../utils/firebase";
+import {  firebaseApp } from "../utils/firebase";
 import firebase from "firebase";
 import "firebase/firestore";
 import Loading from "../components/Loading";
 
 const db = firebase.firestore(firebaseApp);
 
-const Favorites = () => {
+const Favorites = ({ navigation }) => {
     const [restaurants, setRestaurants] = useState(null);
     const [isUserLogged, setIsUserLogged] = useState(false);
     const toastRef = useRef();
@@ -80,6 +80,7 @@ const Favorites = () => {
                             setIsLoading={setIsLoading}
                             toastRef={toastRef}
                             setReloadFavorites={setReloadFavorites}
+                            navigation={navigation}
                         />
                     )}
                     keyExtractor={(item, index) => {
@@ -147,6 +148,7 @@ const Restaurant = ({
     toastRef,
     setIsLoading,
     setReloadFavorites,
+    navigation,
 }) => {
     const { name, images, id } = restaurant.item;
 
@@ -161,6 +163,7 @@ const Restaurant = ({
             { cancelable: false }
         );
     };
+
     const removeFavorite = () => {
         setIsLoading(true);
         db.collection("favorites")
@@ -190,9 +193,17 @@ const Restaurant = ({
                 setIsLoading(false);
             });
     };
+
     return (
         <View style={styles.restaurant}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("restaurants", {
+                        screen: "restaurant",
+                        params: { id: id, name: name },
+                    });
+                }}
+            >
                 <Image
                     resizeMode="cover"
                     style={styles.image}
