@@ -11,6 +11,7 @@ import {
 import { Image, Icon, Button } from "react-native-elements";
 import { useFocusEffect } from "@react-navigation/native";
 import { size } from "lodash";
+import Toast from "react-native-easy-toast";
 
 import { firabaseApp, firebaseApp } from "../utils/firebase";
 import firebase from "firebase";
@@ -22,6 +23,9 @@ const db = firebase.firestore(firebaseApp);
 const Favorites = () => {
     const [restaurants, setRestaurants] = useState(null);
     const [isUserLogged, setIsUserLogged] = useState(false);
+    const toastRef = useRef();
+    const [isLoading, setIsLoading] = useState(false);
+    const [reloadFavorites, setReloadFavorites] = useState(null);
 
     firebase.auth().onAuthStateChanged((user) => {
         user ? setIsUserLogged(true) : setIsUserLogged(false);
@@ -50,7 +54,7 @@ const Favorites = () => {
                         });
                     });
             }
-        }, [isUserLogged])
+        }, [isUserLogged, reloadFavorites])
     );
 
     const getRestaurantsData = (idRestaurantsArr) => {
@@ -71,7 +75,12 @@ const Favorites = () => {
                 <FlatList
                     data={restaurants}
                     renderItem={(restaurant) => (
-                        <Restaurant restaurant={restaurant} />
+                        <Restaurant
+                            restaurant={restaurant}
+                            setIsLoading={setIsLoading}
+                            toastRef={toastRef}
+                            setReloadFavorites={setReloadFavorites}
+                        />
                     )}
                     keyExtractor={(item, index) => {
                         index.toString();
@@ -85,6 +94,8 @@ const Favorites = () => {
                     </Text>
                 </View>
             )}
+            <Loading text="Eliminando restaurante..." isVisible={isLoading} />
+            <Toast ref={toastRef} position="center" opacity={0.9} />
         </View>
     );
 };
@@ -131,8 +142,54 @@ const UserNotLogged = ({ navigation }) => {
     );
 };
 
-const Restaurant = ({ restaurant }) => {
-    const { name, images } = restaurant.item;
+const Restaurant = ({
+    restaurant,
+    toastRef,
+    setIsLoading,
+    setReloadFavorites,
+}) => {
+    const { name, images, id } = restaurant.item;
+
+    const removeFavoriteConfirmation = () => {
+        Alert.alert(
+            "Eliminar restaurante de favoritos",
+            "Estas seguro de que quieres elminiar el restaurante de tus favoritos?",
+            [
+                { text: "Cancelar", style: "cancel" },
+                { text: "Eliminar", onPress: removeFavorite },
+            ],
+            { cancelable: false }
+        );
+    };
+    const removeFavorite = () => {
+        setIsLoading(true);
+        db.collection("favorites")
+            .where("idRestaurant", "==", id)
+            .where("idUser", "==", firebase.auth().currentUser.uid)
+            .get()
+            .then((res) => {
+                res.forEach((doc) => {
+                    const idFavorite = doc.id;
+                    db.collection("favorites")
+                        .doc(idFavorite)
+                        .delete()
+                        .then(() => {
+                            toastRef.current.show(
+                                "Restaurante eliminado correctamente"
+                            );
+                            setReloadFavorites((current) => !current);
+                        })
+                        .catch(() => {
+                            toastRef.current.show(
+                                "Error al eliminar el restaurante"
+                            );
+                        });
+                });
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
     return (
         <View style={styles.restaurant}>
             <TouchableOpacity onPress={() => {}}>
@@ -154,7 +211,7 @@ const Restaurant = ({ restaurant }) => {
                         color="#f00"
                         containerStyle={styles.favorite}
                         onPress={() => {
-                            console.log("remover");
+                            removeFavoriteConfirmation();
                         }}
                         underlayColor="transparent"
                     />
