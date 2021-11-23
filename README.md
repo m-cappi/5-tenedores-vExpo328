@@ -6,6 +6,17 @@ La aplicacion se puede probar desde la aplicacion de Expo, utilizando el siguien
 
 <hr/>
 
+## Caracteristicas
+
+-   **Firebase**: Gestion de usuarios, almacenamiento multimedia en el Storage y gestion de restaurantes, favoritos y comentarios mediante Firestore, una base de datos no relacionales (NoSQL).
+-   Restaurantes: entidades independientes y dinamicas. Cuentan con su descripcion, una galeria de imagenes, geolocalizacion mediante las aplicaciones nativas del OS y un sistema de rating & comentarios.
+-   Favoritos: Sistema de gestion de favoritos independiente y propio de cada usuario.
+-   Top 5: Ranking los 5 restaurantes mejor valorados por los usuarios.
+-   Buscador: Busca y obtiene rapidamente los resultados que ajusten a tu busqueda, a traves de la libreria firesql.
+-   Cuenta: Registrar una nueva cuenta es muy facil, solo se necesita un mail (el cual no requerira validacion) y contraseña. Posteriormente, desde el menu de cuenta se puede personalizar el nombre y avatar del usuario.
+
+<hr/>
+
 ## Udemy: [React Native Expo: Creando un TripAdvisor de Restaurantes](https://ibmcsr.udemy.com/course/react-native-expo-creando-mini-tripadvisor-de-restaurantes/)
 
 ### by [Agustin Navarro Galdon](https://ibmcsr.udemy.com/user/agustin-navarro-galdon/)
