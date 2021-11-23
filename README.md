@@ -2,6 +2,8 @@
 
 5 Tenedores es una aplicacion de restaurantes diseñada en base al modelo de TripAdvisor, siendo un proyecto de practica en React Native utilizando [Expo](https://expo.dev/). El proyecto forma parte del **[Programa Codo a Codo - Especialización en desarrollo Mobile](https://skills.yourlearning.ibm.com/activity/PLAN-609738BAE81A)** en colaboracion con **IBM** y a traves de su plataforma Skillsbuild.
 
+La aplicacion se puede probar desde la aplicacion de Expo, utilizando el siguiente [bundle](https://expo.dev/@nepha199/5-tenedores) desde cualquier celular Android o iOS.
+
 <hr/>
 
 ## Udemy: [React Native Expo: Creando un TripAdvisor de Restaurantes](https://ibmcsr.udemy.com/course/react-native-expo-creando-mini-tripadvisor-de-restaurantes/)
