@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { AirbnbRating, Button, Input } from "react-native-elements";
 import Toast from "react-native-easy-toast";
 import firebase from "firebase/app";
@@ -72,9 +72,7 @@ const AddRestaurantReview = ({ navigation, route }) => {
     };
 
     return (
-        <View style={styles.viewBody}>
-            <Text>AddRestaurantReview...</Text>
-
+        <ScrollView style={styles.viewBody}>
             <View style={styles.viewRating}>
                 <AirbnbRating
                     count={5}
@@ -111,7 +109,7 @@ const AddRestaurantReview = ({ navigation, route }) => {
             </View>
             <Toast ref={toastRef} position="center" opacity={0.9} />
             <Loading isVisible={isLoading} text="Enviando comentario" />
-        </View>
+        </ScrollView>
     );
 };
 

@@ -37,7 +37,6 @@ const ListReviews = ({ navigation, idRestaurant }) => {
 
     return (
         <View>
-            <Text>ListReviews...</Text>
             {userLogged ? (
                 <Button
                     title="Comparte tu opinion"
