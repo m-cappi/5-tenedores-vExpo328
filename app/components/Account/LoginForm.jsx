@@ -10,8 +10,8 @@ import Loading from "../Loading";
 
 const LoginForm = ({ toastRef }) => {
     const [loginData, setLoginData] = useState({
-        email: "demo@mail.com",
-        password: "demo123",
+        email: "",
+        password: "",
     }); //dejarlo como {} para produccion
     const [hidePassword, setHidePassword] = useState(true);
     const [loading, setLoading] = useState(false);

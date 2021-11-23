@@ -2,7 +2,9 @@
 
 5 Tenedores es una aplicacion de restaurantes diseñada en base al modelo de TripAdvisor, siendo un proyecto de practica en React Native utilizando [Expo](https://expo.dev/). El proyecto forma parte del **[Programa Codo a Codo - Especialización en desarrollo Mobile](https://skills.yourlearning.ibm.com/activity/PLAN-609738BAE81A)** en colaboracion con **IBM** y a traves de su plataforma Skillsbuild.
 
-La aplicacion se puede probar desde la aplicacion de Expo, utilizando el siguiente [bundle](https://expo.dev/@nepha199/5-tenedores) desde cualquier celular Android o iOS.
+La aplicacion se puede probar:
+- Via el [bundle de expo](https://expo.dev/@nepha199/5-tenedores) desde cualquier celular Android, iOS o un simulador de los mismos. Requiere tener instalada la aplicacion de [Expo](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US).
+- Via descarga directa del [APK](https://drive.google.com/file/d/1d-N5x6n-3C4c96LCMlEeMD9dlxorwNDd/view?usp=sharing) para celulares/simulaciones de Android.
 
 <hr/>
 
@@ -13,7 +15,8 @@ La aplicacion se puede probar desde la aplicacion de Expo, utilizando el siguien
 -   Favoritos: Sistema de gestion de favoritos independiente y propio de cada usuario.
 -   Top 5: Ranking los 5 restaurantes mejor valorados por los usuarios.
 -   Buscador: Busca y obtiene rapidamente los resultados que ajusten a tu busqueda, a traves de la libreria firesql.
--   Cuenta: Registrar una nueva cuenta es muy facil, solo se necesita un mail (el cual no requerira validacion) y contraseña. Posteriormente, desde el menu de cuenta se puede personalizar el nombre y avatar del usuario.
+-   Cuenta: Registrar una nueva cuenta es muy facil, solo se necesita un mail (el cual puede ser ficticio) y contraseña. Posteriormente, desde el menu de cuenta se puede personalizar el nombre y avatar del usuario.
+> En todo caso, se puede acceder por un usuario demonstrativo: demo@mail.com ( demo123 )
 
 <hr/>
 
