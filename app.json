@@ -1,44 +1,48 @@
 {
-    "expo": {
-        "name": "5-tenedores-vExpo328",
-        "slug": "5-tenedores-vExpo328",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#00a680"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 0
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": false
-        },
-        "android": {
-            "package": "com.martincappi.cincotenedores",
-            "config": {
-                "googleMaps": {
-                    "apiKey": "AIzaSyCwOqm8Rgw-FFNBPx8zVPZtlVE2yHX9_yM"
-                }
-            },
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#FFFFFF"
-            },
-            "permissions": [
-                "CAMERA_ROLL",
-                "READ_EXTERNAL_STORAGE",
-                "WRITE_EXTERNAL_STORAGE",
-                "LOCATION",
-                "ACCESS_COARSE_LOCATION",
-                "ACCESS_FINE_LOCATION"
-            ]
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
+  "expo": {
+    "name": "5 Tenedores",
+    "slug": "5-tenedores",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#00a680"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.martincappi.cincotenedores",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCwOqm8Rgw-FFNBPx8zVPZtlVE2yHX9_yM"
         }
-    }
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": [
+        "CAMERA_ROLL",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "Proyecto 5 Tenedores recreado en expo 3.28 y otras librerías mas actuales\nOriginal:\nUdemy: React Native Expo: Creando un TripAdvisor de Restaurantes\n\n",
+    "githubUrl": "https://github.com/nepha199/5-tenedores-vExpo328"
+  }
 }
